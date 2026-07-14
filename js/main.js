@@ -268,8 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
       right: '20px',
       padding: '15px 25px',
       borderRadius: '12px',
-      background: type === 'success' ? '#10B981' : '#EF4444',
-      color: 'white',
+      background: type === 'success' ? '#FACC15' : '#EF4444',
+      color: type === 'success' ? '#18181B' : 'white',
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fontWeight: '500',
       fontSize: '0.95rem',
       zIndex: '10000',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
       transform: 'translateX(120%)',
       transition: 'transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
     });
@@ -330,8 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
     width: '45px',
     height: '45px',
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #8B5CF6, #EC4899)',
-    color: 'white',
+    background: 'linear-gradient(135deg, #FACC15, #F59E0B)',
+    color: '#18181B',
     border: 'none',
     fontSize: '1.2rem',
     cursor: 'pointer',
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     opacity: '0',
     transform: 'translateY(20px)',
     transition: 'all 0.3s ease',
-    boxShadow: '0 4px 15px rgba(139,92,246,0.3)'
+    boxShadow: '0 4px 15px rgba(250,204,21,0.3)'
   });
   document.body.appendChild(backToTop);
 
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
         width: `${size}px`,
         height: `${size}px`,
         borderRadius: '50%',
-        background: `rgba(139, 92, 246, ${Math.random() * 0.3 + 0.1})`,
+        background: `rgba(250, 204, 21, ${Math.random() * 0.3 + 0.1})`,
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
         animation: `particleFloat ${Math.random() * 10 + 10}s linear infinite`,
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
   createParticles();
 
   console.log('%c Dhan Prem Studio %c Website Loaded Successfully!',
-    'background: linear-gradient(135deg, #8B5CF6, #EC4899); color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold;',
-    'color: #8B5CF6; font-weight: bold;'
+    'background: linear-gradient(135deg, #FACC15, #F59E0B); color: #18181B; padding: 5px 10px; border-radius: 5px; font-weight: bold;',
+    'color: #FACC15; font-weight: bold;'
   );
 });
