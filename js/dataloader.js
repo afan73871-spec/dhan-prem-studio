@@ -2,14 +2,20 @@
    DATA LOADER - MySQL API Version
    ============================================ */
 
-const API_URL = window.location.origin + '/api';
+const API_URL = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
+  ? window.location.origin + '/api'
+  : 'http://localhost:3001/api';
 
 async function apiGet(url) {
   try {
     const sep = url.includes('?') ? '&' : '?';
     const res = await fetch(API_URL + url + sep + '_t=' + Date.now());
     return await res.json();
-  } catch (e) { console.error('API error:', e); return []; }
+  } catch (e) {
+    console.error('API error:', e);
+    console.warn('Make sure server is running: node server.js');
+    return [];
+  }
 }
 
 function refreshAnimations(container) {
@@ -151,7 +157,7 @@ async function loadSettings() {
 // ---- Logo ----
 async function loadLogo() {
   try {
-    const data = await fetch(API_URL + '/logo').then(r => r.json());
+    const data = await fetch(API_URL + '/logo?_t=' + Date.now()).then(r => r.json());
     if (data.logo) {
       document.querySelectorAll('.logo-img, .logo-img-small').forEach(img => { img.src = data.logo; });
     }
