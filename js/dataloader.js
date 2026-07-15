@@ -6,7 +6,8 @@ const API_URL = window.location.origin + '/api';
 
 async function apiGet(url) {
   try {
-    const res = await fetch(API_URL + url);
+    const sep = url.includes('?') ? '&' : '?';
+    const res = await fetch(API_URL + url + sep + '_t=' + Date.now());
     return await res.json();
   } catch (e) { console.error('API error:', e); return []; }
 }
@@ -200,4 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
   loadTeam();
   loadSettings();
   loadLogo();
+});
+
+// ---- Auto-refresh on tab focus (sync with admin panel changes) ----
+window.addEventListener('focus', () => {
+  loadServices();
+  loadPortfolio();
+  loadTestimonials();
+  loadPricing();
+  loadTeam();
 });
