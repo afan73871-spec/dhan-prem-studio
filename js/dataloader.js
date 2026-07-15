@@ -167,6 +167,16 @@ function loadSettings() {
     const msg = el.href.includes('text=') ? '?' + el.href.split('?')[1] : '';
     el.href = `https://wa.me/${s.whatsapp}${msg}`;
   });
+
+  const socialMap = { facebook: s.facebook, instagram: s.instagram, linkedin: s.linkedin, youtube: s.youtube };
+  document.querySelectorAll('[data-social]').forEach(el => {
+    const platform = el.getAttribute('data-social');
+    if (socialMap[platform]) {
+      el.href = socialMap[platform];
+      el.target = '_blank';
+      el.rel = 'noopener';
+    }
+  });
 }
 
 function loadServicesDetail() {
