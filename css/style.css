@@ -232,7 +232,6 @@ img {
   height: 70px;
   width: auto;
   object-fit: contain;
-  mix-blend-mode: darken;
   animation: logoFloat 3s ease-in-out infinite;
 }
 
