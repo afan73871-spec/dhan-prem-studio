@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Contact Form Handling ----
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const formData = new FormData(contactForm);
@@ -160,51 +160,43 @@ document.addEventListener('DOMContentLoaded', () => {
       const service = formData.get('service');
       const message = formData.get('message');
 
-      // Simple validation
       if (!name || !email || !message) {
         showNotification('Please fill in all required fields', 'error');
         return;
       }
 
-      // Email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         showNotification('Please enter a valid email address', 'error');
         return;
       }
 
-      // Save to admin panel messages
-      const adminData = JSON.parse(localStorage.getItem('dpAdminData') || '{}');
-      if (!adminData.messages) adminData.messages = [];
-      adminData.messages.push({
-        id: Date.now(),
-        name: name,
-        email: email,
-        phone: phone || '',
-        service: service || '',
-        message: message,
-        date: new Date().toLocaleDateString('en-IN'),
-        read: false
-      });
-      localStorage.setItem('dpAdminData', JSON.stringify(adminData));
-
-      // Success animation
       const btn = contactForm.querySelector('.btn');
       btn.innerHTML = '<span>Sending...</span>';
       btn.style.pointerEvents = 'none';
 
-      setTimeout(() => {
+      try {
+        await fetch('http://localhost:3001/api/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, service, message })
+        });
         btn.innerHTML = '<span>&#10003; Message Sent!</span>';
         btn.style.background = '#10B981';
         showNotification('Message sent successfully! We will contact you soon.', 'success');
         contactForm.reset();
+      } catch (err) {
+        showNotification('Error sending message. Please try again.', 'error');
+        btn.innerHTML = '<span>Send Message</span><span>&#10132;</span>';
+        btn.style.pointerEvents = '';
+        return;
+      }
 
-        setTimeout(() => {
-          btn.innerHTML = '<span>Send Message</span><span>&#10132;</span>';
-          btn.style.background = '';
-          btn.style.pointerEvents = '';
-        }, 3000);
-      }, 1500);
+      setTimeout(() => {
+        btn.innerHTML = '<span>Send Message</span><span>&#10132;</span>';
+        btn.style.background = '';
+        btn.style.pointerEvents = '';
+      }, 3000);
     });
   }
 
