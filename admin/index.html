@@ -82,6 +82,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Messages
         </div>
+        <div class="sidebar-nav-item" data-page="actin-messages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          ACTIN Messages
+        </div>
 
         <div class="sidebar-section-title">System</div>
         <div class="sidebar-nav-item" data-page="settings">
@@ -207,6 +211,25 @@
               <button class="topbar-btn" onclick="clearMessages()">Clear All</button>
             </div>
             <div id="messagesList"></div>
+          </div>
+        </div>
+
+        <!-- ACTIN MESSAGES -->
+        <div class="page-section" id="page-actin-messages">
+          <div class="stats-row" id="actinStats"></div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Join ACTIN Enquiries</h3>
+              <button class="topbar-btn" onclick="clearActinMessages('join')">Clear Join</button>
+            </div>
+            <div id="actinJoinList"></div>
+          </div>
+          <div class="data-card" style="margin-top:24px;">
+            <div class="data-card-header">
+              <h3>Brand Enquiries</h3>
+              <button class="topbar-btn" onclick="clearActinMessages('brand')">Clear Brand</button>
+            </div>
+            <div id="actinBrandList"></div>
           </div>
         </div>
 

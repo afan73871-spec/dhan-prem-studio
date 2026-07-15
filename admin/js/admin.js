@@ -125,6 +125,9 @@ document.getElementById('mobileToggle').addEventListener('click', function() {
 // ---- Load Dashboard ----
 function loadDashboard() {
   const data = getData();
+  const actinData = getActinData();
+  const joinCount = actinData.filter(s => s.type === 'join').length;
+  const brandCount = actinData.filter(s => s.type === 'brand').length;
   const statsHtml = `
     <div class="stat-card">
       <div class="stat-card-icon yellow">📈</div>
@@ -141,6 +144,14 @@ function loadDashboard() {
     <div class="stat-card">
       <div class="stat-card-icon red">✉️</div>
       <div><h3>${data.messages.length}</h3><p>Messages</p></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon yellow">⭐</div>
+      <div><h3>${joinCount}</h3><p>ACTIN Joins</p></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon green">💼</div>
+      <div><h3>${brandCount}</h3><p>Brand Enquiries</p></div>
     </div>
   `;
   document.getElementById('dashboardStats').innerHTML = statsHtml;
@@ -167,6 +178,7 @@ function loadPage(page) {
     case 'pricing': renderPricing(data.pricing); break;
     case 'team': renderTeam(data.team); break;
     case 'messages': renderMessages(data.messages); break;
+    case 'actin-messages': loadActinMessages(); break;
     case 'settings': loadSettings(data.settings); break;
   }
 }
@@ -461,6 +473,86 @@ function clearMessages() {
   data.messages = [];
   saveData(data);
   renderMessages([]);
+}
+
+// ---- ACTIN Messages ----
+function getActinData() {
+  const stored = localStorage.getItem('actin_submissions');
+  if (stored) return JSON.parse(stored);
+  return [];
+}
+
+function loadActinMessages() {
+  const submissions = getActinData();
+  const joinItems = submissions.filter(s => s.type === 'join');
+  const brandItems = submissions.filter(s => s.type === 'brand');
+
+  document.getElementById('actinStats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-icon yellow">⭐</div>
+      <div><h3>${joinItems.length}</h3><p>Join Enquiries</p></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon green">💼</div>
+      <div><h3>${brandItems.length}</h3><p>Brand Enquiries</p></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon blue">📊</div>
+      <div><h3>${submissions.length}</h3><p>Total Submissions</p></div>
+    </div>
+  `;
+
+  document.getElementById('actinJoinList').innerHTML = joinItems.length > 0
+    ? joinItems.reverse().map(s => `
+      <div class="message-item unread">
+        <div class="message-header">
+          <h4>${s.fullName || 'N/A'} — ${s.email || 'N/A'}</h4>
+          <span>${s.timestamp ? new Date(s.timestamp).toLocaleString() : 'N/A'}</span>
+        </div>
+        <div class="message-preview" style="margin-top:8px;">
+          <span class="badge badge-info">${s.category || 'N/A'}</span>
+          <span class="badge badge-warning">${s.followers || 'N/A'} followers</span>
+          ${s.city ? '<span class="badge badge-info">' + s.city + '</span>' : ''}
+        </div>
+        <div style="margin-top:8px;color:var(--text-dim);font-size:0.9rem;">
+          <p><strong>Mobile:</strong> ${s.mobile || 'N/A'} | <strong>Instagram:</strong> ${s.instagram || 'N/A'}</p>
+          <p><strong>Languages:</strong> ${s.languages || 'N/A'}</p>
+          ${s.collaborations ? '<p><strong>Collaborations:</strong> ' + s.collaborations + '</p>' : ''}
+          ${s.message ? '<p><strong>Message:</strong> ' + s.message + '</p>' : ''}
+          ${s.portfolio ? '<p><strong>Portfolio:</strong> ' + s.portfolio + '</p>' : ''}
+        </div>
+      </div>
+    `).join('')
+    : '<div class="empty-state"><span>📭</span><p>No join enquiries yet. Submissions from the ACTIN Join form will appear here.</p></div>';
+
+  document.getElementById('actinBrandList').innerHTML = brandItems.length > 0
+    ? brandItems.reverse().map(s => `
+      <div class="message-item unread">
+        <div class="message-header">
+          <h4>${s.company || 'N/A'} — ${s.contactPerson || 'N/A'}</h4>
+          <span>${s.timestamp ? new Date(s.timestamp).toLocaleString() : 'N/A'}</span>
+        </div>
+        <div class="message-preview" style="margin-top:8px;">
+          <span class="badge badge-info">${s.industry || 'N/A'}</span>
+          <span class="badge badge-warning">${s.influencerCategory || 'N/A'}</span>
+          ${s.budget ? '<span class="badge badge-info">' + s.budget + '</span>' : ''}
+        </div>
+        <div style="margin-top:8px;color:var(--text-dim);font-size:0.9rem;">
+          <p><strong>Mobile:</strong> ${s.mobile || 'N/A'} | <strong>Email:</strong> ${s.email || 'N/A'}</p>
+          <p><strong>Location:</strong> ${s.location || 'N/A'} | <strong>Objective:</strong> ${s.objective || 'N/A'}</p>
+          ${s.website ? '<p><strong>Website:</strong> ' + s.website + '</p>' : ''}
+          ${s.requirements ? '<p><strong>Requirements:</strong> ' + s.requirements + '</p>' : ''}
+        </div>
+      </div>
+    `).join('')
+    : '<div class="empty-state"><span>📭</span><p>No brand enquiries yet. Submissions from the ACTIN Brand Enquiry form will appear here.</p></div>';
+}
+
+function clearActinMessages(type) {
+  if (!confirm('Clear all ' + type + ' enquiries?')) return;
+  const all = getActinData().filter(s => s.type !== type);
+  localStorage.setItem('actin_submissions', JSON.stringify(all));
+  loadActinMessages();
 }
 
 // ---- Settings ----
