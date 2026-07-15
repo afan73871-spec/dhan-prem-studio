@@ -233,6 +233,7 @@ img {
   height: 70px;
   border-radius: var(--radius);
   object-fit: cover;
+  mix-blend-mode: multiply;
   animation: logoFloat 3s ease-in-out infinite;
 }
 
