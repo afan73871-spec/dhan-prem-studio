@@ -221,6 +221,7 @@ document.getElementById('modalSave').addEventListener('click', async function() 
     await apiFetch(url, { method: currentEdit ? 'PUT' : 'POST', body });
     closeModal();
     loadPage(type === 'service' ? 'services' : type === 'testimonial' ? 'testimonials' : type);
+    autoSync();
   } catch (e) { alert('Error saving: ' + e.message); }
 });
 
@@ -232,6 +233,7 @@ async function deleteItem(collection, id) {
   try {
     await apiFetch(`/${endpoint}/${id}`, { method: 'DELETE' });
     loadPage(collection === 'services' ? 'services' : collection === 'portfolio' ? 'portfolio' : collection === 'testimonials' ? 'testimonials' : collection === 'pricing' ? 'pricing' : 'team');
+    autoSync();
   } catch (e) { alert('Error deleting: ' + e.message); }
 }
 
@@ -351,6 +353,11 @@ async function removeLogo() {
 // ---- Close modal ----
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+// ---- Auto-sync to static HTML after every change ----
+async function autoSync() {
+  try { await apiFetch('/sync-static', { method: 'POST' }); } catch (e) {}
+}
 
 // ---- Sync to Static HTML (GitHub Pages) ----
 async function syncToStatic() {

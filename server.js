@@ -368,7 +368,39 @@ app.post('/api/sync-static', async (req, res) => {
     );
 
     fs.writeFileSync(path.join(__dirname, 'index.html'), html, 'utf8');
-    res.json({ success: true, message: 'Static HTML updated! Push to GitHub with: git add . && git commit -m "update" && git push' });
+
+    // -- Sync services/index.html --
+    try {
+      let svcHtml = fs.readFileSync(path.join(__dirname, 'services', 'index.html'), 'utf8');
+      const svcDetailHtml = services.map(s => {
+        const icon = s.icon || '&#128188;';
+        const features = (s.features || '').split(',').map(f => f.trim()).filter(Boolean);
+        const featList = features.map(f => `<li>${f}</li>`).join('');
+        return `        <div class="service-detail-card"><div class="service-detail-icon">${icon}</div><div><h3>${s.title}</h3><p>${s.description || ''}</p><ul>${featList}</ul></div></div>`;
+      }).join('\n');
+      svcHtml = svcHtml.replace(
+        /(<div class="services-detail-grid[^"]*" id="servicesDetailGrid">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/,
+        `$1\n${svcDetailHtml}\n      $3`
+      );
+      fs.writeFileSync(path.join(__dirname, 'services', 'index.html'), svcHtml, 'utf8');
+    } catch (e) {}
+
+    // -- Sync portfolio/index.html --
+    try {
+      let portHtml = fs.readFileSync(path.join(__dirname, 'portfolio', 'index.html'), 'utf8');
+      const portCardsHtml = portfolio.map(p => {
+        const bg = p.background || 'bg-1';
+        const icon = p.icon || '&#128640;';
+        return `        <div class="portfolio-card" data-category="${p.category}"><div class="portfolio-image"><div class="portfolio-image-bg ${bg}">${icon}</div><div class="portfolio-overlay"><h4>${p.title}</h4><p>${p.result || ''}</p></div></div><div class="portfolio-info"><span class="portfolio-tag">${p.category}</span><h4>${p.title}</h4></div></div>`;
+      }).join('\n');
+      portHtml = portHtml.replace(
+        /(<div class="portfolio-grid[^"]*" id="portfolioGrid">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/,
+        `$1\n${portCardsHtml}\n      $3`
+      );
+      fs.writeFileSync(path.join(__dirname, 'portfolio', 'index.html'), portHtml, 'utf8');
+    } catch (e) {}
+
+    res.json({ success: true, message: 'All pages updated! Push to GitHub with: git add . && git commit -m "update" && git push' });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
