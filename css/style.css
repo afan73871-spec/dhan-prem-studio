@@ -262,7 +262,7 @@ img {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 35px;
+  gap: 24px;
 }
 
 .nav-links a {
@@ -1970,6 +1970,7 @@ img {
    RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
+  .nav-links { gap: 18px; }
   .hero .container {
     grid-template-columns: 1fr;
     text-align: center;
