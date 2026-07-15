@@ -50,7 +50,7 @@ const defaultData = {
     tagline: 'Digital Marketing & Content Creation Studio',
     phone: '+91 79857 57365',
     email: 'dhanpremstudios@zohomail.in',
-    address: 'Aliganj, Lucknow',
+    address: 'Lucknow Aliganj',
     whatsapp: '917985757365',
     facebook: 'https://www.facebook.com/share/1BZaRRR38f/',
     instagram: 'https://www.instagram.com/dhanpremstudios?igsh=dWdxOGM2amI4YTkx',
