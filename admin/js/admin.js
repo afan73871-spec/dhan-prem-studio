@@ -14,12 +14,18 @@ const defaultData = {
     { id: 6, icon: '💻', title: 'Web Development', desc: 'Modern, responsive websites and landing pages designed to convert.', features: 'Custom Website, E-commerce, Landing Pages, Maintenance' }
   ],
   portfolio: [
-    { id: 1, title: 'TechStart Growth Campaign', category: 'marketing', result: '300% ROI increase', bg: 'bg-1' },
-    { id: 2, title: 'FreshBites Brand Video', category: 'content', result: '2M+ views', bg: 'bg-2' },
-    { id: 3, title: 'LuxeLife Brand Redesign', category: 'branding', result: 'Complete transformation', bg: 'bg-3' },
-    { id: 4, title: 'StyleHub E-commerce', category: 'web', result: '5x conversion rate', bg: 'bg-4' },
-    { id: 5, title: 'Foodies Social Campaign', category: 'marketing', result: '50K followers', bg: 'bg-5' },
-    { id: 6, title: 'EduLearn YouTube Series', category: 'content', result: '500K subscribers', bg: 'bg-6' }
+    { id: 1, title: 'TechStart Growth Campaign', category: 'marketing', result: '300% ROI increase in 3 months through targeted Google Ads and social media campaigns', bg: 'bg-1', icon: '🚀' },
+    { id: 2, title: 'FreshBites Brand Video', category: 'content', result: '2M+ views across YouTube, Instagram, and Facebook', bg: 'bg-2', icon: '🎬' },
+    { id: 3, title: 'LuxeLife Brand Redesign', category: 'branding', result: 'Complete brand identity transformation with new logo, colors, and guidelines', bg: 'bg-3', icon: '🎨' },
+    { id: 4, title: 'StyleHub E-commerce', category: 'web', result: 'Custom e-commerce platform with 5x conversion rate improvement', bg: 'bg-4', icon: '💻' },
+    { id: 5, title: 'Foodies Social Campaign', category: 'marketing', result: '50K Instagram followers gained in just 2 months', bg: 'bg-5', icon: '📱' },
+    { id: 6, title: 'EduLearn YouTube Series', category: 'content', result: '500K subscribers gained through educational content series', bg: 'bg-6', icon: '🎧' },
+    { id: 7, title: 'FinGrow SEO Campaign', category: 'marketing', result: 'Page 1 ranking for 50+ competitive keywords in 6 months', bg: 'bg-1', icon: '💰' },
+    { id: 8, title: 'StarBite Rebranding', category: 'branding', result: 'Complete brand refresh for a leading food chain in Lucknow', bg: 'bg-2', icon: '⭐' },
+    { id: 9, title: 'ShopEasy Marketplace', category: 'web', result: 'Full-stack marketplace with payment integration and admin panel', bg: 'bg-3', icon: '🛒' },
+    { id: 10, title: 'TravelTales Documentary', category: 'content', result: 'Award-winning travel documentary series for Tourism India', bg: 'bg-4', icon: '🎬' },
+    { id: 11, title: 'MediCare Email Campaign', category: 'marketing', result: '45% open rate with personalized email automation', bg: 'bg-5', icon: '📧' },
+    { id: 12, title: 'AnalyticsPro Dashboard', category: 'web', result: 'Real-time analytics dashboard for a SaaS company', bg: 'bg-6', icon: '📊' }
   ],
   testimonials: [
     { id: 1, name: 'Rahul Kumar', initials: 'RK', role: 'CEO, TechStart Solutions', rating: 5, text: 'Dhan Prem Studio transformed our online presence completely. Their digital marketing strategies increased our leads by 300% in just 3 months.' },
@@ -28,9 +34,9 @@ const defaultData = {
     { id: 4, name: 'Ananya Gupta', initials: 'AG', role: 'Owner, LuxeLife Boutique', rating: 5, text: 'From brand identity to social media management, they handle everything professionally. Our engagement increased by 500%.' }
   ],
   pricing: [
-    { id: 1, name: 'Starter Pack', price: '4,999', featured: false, features: 'Social Media (2 Platforms), 8 Posts/Month, Basic SEO, Monthly Reports, Email Support' },
-    { id: 2, name: 'Professional', price: '14,999', featured: true, features: 'Social Media (4 Platforms), 20 Posts + 4 Reels, Advanced SEO & PPC, Content Strategy, Video (2/mo), Priority Support' },
-    { id: 3, name: 'Enterprise', price: '29,999', featured: false, features: 'All Social Platforms, Unlimited Posts, Full Marketing Suite, Video (8/mo), Brand Strategy, 24/7 Manager' }
+    { id: 1, name: 'Starter Pack', price: '4,999', featured: false, features: 'Social Media (2 Platforms), 8 Posts/Month, Basic SEO, Monthly Reports, Email Support', desc: 'Perfect for small businesses starting their digital journey' },
+    { id: 2, name: 'Professional', price: '14,999', featured: true, features: 'Social Media (4 Platforms), 20 Posts + 4 Reels, Advanced SEO & PPC, Content Strategy, Video (2/mo), Priority Support', desc: 'Complete solution for growing businesses' },
+    { id: 3, name: 'Enterprise', price: '29,999', featured: false, features: 'All Social Platforms, Unlimited Posts, Full Marketing Suite, Video (8/mo), Brand Strategy, 24/7 Manager', desc: '360° digital marketing for established brands' }
   ],
   team: [
     { id: 1, name: 'Dhan Prem', initials: 'DP', role: 'Founder & CEO' },
@@ -185,7 +191,7 @@ function renderServices(items) {
 function renderPortfolio(items) {
   document.getElementById('portfolioTable').innerHTML = items.map(p => `
     <tr>
-      <td><strong>${p.title}</strong></td>
+      <td>${p.icon || '🚀'} <strong>${p.title}</strong></td>
       <td><span class="badge badge-info">${p.category}</span></td>
       <td>${p.result}</td>
       <td>
@@ -295,6 +301,7 @@ function openModal(type, id) {
     const item = id ? data.portfolio.find(p => p.id === id) : null;
     document.getElementById('modalTitle').textContent = item ? 'Edit Project' : 'Add Project';
     html = `
+      <div class="form-group"><label>Icon (emoji)</label><input type="text" id="mIcon" value="${item ? item.icon || '' : ''}" placeholder="🚀"></div>
       <div class="form-group"><label>Title</label><input type="text" id="mTitle" value="${item ? item.title : ''}" placeholder="Project name"></div>
       <div class="form-row">
         <div class="form-group"><label>Category</label><select id="mCategory"><option value="marketing" ${item?.category === 'marketing' ? 'selected' : ''}>Marketing</option><option value="content" ${item?.category === 'content' ? 'selected' : ''}>Content</option><option value="branding" ${item?.category === 'branding' ? 'selected' : ''}>Branding</option><option value="web" ${item?.category === 'web' ? 'selected' : ''}>Web</option></select></div>
@@ -327,6 +334,7 @@ function openModal(type, id) {
         <div class="form-group"><label>Price (₹)</label><input type="text" id="mPrice" value="${item ? item.price : ''}" placeholder="4,999"></div>
         <div class="form-group"><label>Featured?</label><select id="mFeatured"><option value="false" ${!item?.featured ? 'selected' : ''}>No</option><option value="true" ${item?.featured ? 'selected' : ''}>Yes</option></select></div>
       </div>
+      <div class="form-group"><label>Description</label><input type="text" id="mDesc" value="${item ? item.desc || '' : ''}" placeholder="Plan description"></div>
       <div class="form-group"><label>Features (comma separated)</label><textarea id="mFeatures" placeholder="Feature 1, Feature 2, Feature 3">${item ? item.features : ''}</textarea></div>
     `;
   }
@@ -373,6 +381,7 @@ document.getElementById('modalSave').addEventListener('click', function() {
   if (type === 'portfolio') {
     const obj = {
       id: currentEdit || Date.now(),
+      icon: document.getElementById('mIcon').value || '🚀',
       title: document.getElementById('mTitle').value,
       category: document.getElementById('mCategory').value,
       bg: document.getElementById('mBg').value,
@@ -401,6 +410,7 @@ document.getElementById('modalSave').addEventListener('click', function() {
       name: document.getElementById('mName').value,
       price: document.getElementById('mPrice').value,
       featured: document.getElementById('mFeatured').value === 'true',
+      desc: document.getElementById('mDesc').value || '',
       features: document.getElementById('mFeatures').value
     };
     if (currentEdit) { data.pricing = data.pricing.map(p => p.id === currentEdit ? obj : p); }

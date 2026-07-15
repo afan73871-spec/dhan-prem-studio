@@ -133,66 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(type, 1500);
   }
 
-  // ---- Portfolio Filter ----
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const portfolioCards = document.querySelectorAll('.portfolio-card');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Update active state
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.getAttribute('data-filter');
-
-      portfolioCards.forEach(card => {
-        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.8)';
-          setTimeout(() => {
-            card.style.display = 'block';
-            setTimeout(() => {
-              card.style.opacity = '1';
-              card.style.transform = 'scale(1)';
-            }, 50);
-          }, 300);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.8)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 300);
-        }
-      });
-    });
-  });
-
-  // ---- Testimonials Slider ----
-  const testimonialsTrack = document.querySelector('.testimonials-track');
-  const testimonialDots = document.querySelectorAll('.testimonial-dot');
-  let currentTestimonial = 0;
-
-  const updateTestimonial = (index) => {
-    if (!testimonialsTrack) return;
-    testimonialsTrack.style.transform = `translateX(-${index * 100}%)`;
-    testimonialDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-    currentTestimonial = index;
-  };
-
-  testimonialDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => updateTestimonial(index));
-  });
-
-  // Auto-play testimonials
-  if (testimonialsTrack) {
-    setInterval(() => {
-      const nextIndex = (currentTestimonial + 1) % testimonialDots.length;
-      updateTestimonial(nextIndex);
-    }, 5000);
-  }
-
   // ---- Smooth Scroll for Anchor Links ----
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
