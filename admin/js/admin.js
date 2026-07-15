@@ -3,7 +3,9 @@
    MySQL Backend Version
    ============================================ */
 
-const API = 'http://localhost:3001/api';
+const API = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
+  ? window.location.origin + '/api'
+  : 'http://localhost:3001/api';
 
 // ---- Data Fetch ----
 async function apiFetch(url, options = {}) {
@@ -358,6 +360,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
 const adminChannel = new BroadcastChannel('site-updates');
 async function autoSync() {
   try { await apiFetch('/sync-static', { method: 'POST' }); } catch (e) {}
+  try { await apiFetch('/sync', { method: 'POST' }); } catch (e) {}
   adminChannel.postMessage({ type: 'content-updated', time: Date.now() });
 }
 
