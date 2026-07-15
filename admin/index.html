@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Dhan Prem Studio</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>DP</text></svg>">
+</head>
+<body>
+
+  <!-- ============ LOGIN PAGE ============ -->
+  <div class="login-page" id="loginPage">
+    <div class="login-box">
+      <div class="login-logo">
+        <div class="logo-icon">DP</div>
+        <h2>Admin Panel</h2>
+        <p>Dhan Prem Studio Dashboard</p>
+      </div>
+      <div class="login-error" id="loginError">Invalid username or password</div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="loginUser" placeholder="Enter username" value="admin" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="Enter password" value="admin123" required>
+        </div>
+        <button type="submit" class="login-btn">Login to Dashboard</button>
+      </form>
+      <div class="login-footer">
+        <p>Default: <strong>admin</strong> / <strong>admin123</strong></p>
+        <p style="margin-top:10px"><a href="../index.html">← Back to Website</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ADMIN LAYOUT ============ -->
+  <div class="admin-layout" id="adminLayout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">DP</div>
+        <div>
+          <h3>Dhan Prem</h3>
+          <p>Admin Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-title">Main</div>
+        <div class="sidebar-nav-item active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </div>
+
+        <div class="sidebar-section-title">Content</div>
+        <div class="sidebar-nav-item" data-page="services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>
+          Services
+        </div>
+        <div class="sidebar-nav-item" data-page="portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+          Portfolio
+        </div>
+        <div class="sidebar-nav-item" data-page="testimonials">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Testimonials
+        </div>
+        <div class="sidebar-nav-item" data-page="pricing">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Pricing
+        </div>
+        <div class="sidebar-nav-item" data-page="team">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Team
+        </div>
+
+        <div class="sidebar-section-title">Communication</div>
+        <div class="sidebar-nav-item" data-page="messages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Messages
+        </div>
+
+        <div class="sidebar-section-title">System</div>
+        <div class="sidebar-nav-item" data-page="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" id="logoutBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-toggle" id="mobileToggle">☰</button>
+          <h2 id="pageTitle">Dashboard</h2>
+        </div>
+        <div class="topbar-right">
+          <a href="../index.html" target="_blank" class="topbar-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View Site
+          </a>
+          <div class="topbar-user">
+            <div class="topbar-user-avatar">A</div>
+            <span>Admin</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- DASHBOARD -->
+        <div class="page-section active" id="page-dashboard">
+          <div class="stats-row" id="dashboardStats"></div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Recent Messages</h3>
+            </div>
+            <div id="recentMessages"></div>
+          </div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="page-section" id="page-services">
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>All Services</h3>
+              <button class="topbar-btn" onclick="openModal('service')">+ Add Service</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Icon</th><th>Title</th><th>Description</th><th>Actions</th></tr></thead>
+              <tbody id="servicesTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PORTFOLIO -->
+        <div class="page-section" id="page-portfolio">
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>All Projects</h3>
+              <button class="topbar-btn" onclick="openModal('portfolio')">+ Add Project</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Title</th><th>Category</th><th>Result</th><th>Actions</th></tr></thead>
+              <tbody id="portfolioTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <div class="page-section" id="page-testimonials">
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>All Testimonials</h3>
+              <button class="topbar-btn" onclick="openModal('testimonial')">+ Add Testimonial</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Author</th><th>Role</th><th>Rating</th><th>Actions</th></tr></thead>
+              <tbody id="testimonialsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="page-section" id="page-pricing">
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Pricing Plans</h3>
+              <button class="topbar-btn" onclick="openModal('pricing')">+ Add Plan</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Plan</th><th>Price</th><th>Featured</th><th>Actions</th></tr></thead>
+              <tbody id="pricingTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TEAM -->
+        <div class="page-section" id="page-team">
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Team Members</h3>
+              <button class="topbar-btn" onclick="openModal('team')">+ Add Member</button>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Name</th><th>Initials</th><th>Role</th><th>Actions</th></tr></thead>
+              <tbody id="teamTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="page-section" id="page-messages">
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Contact Messages</h3>
+              <button class="topbar-btn" onclick="clearMessages()">Clear All</button>
+            </div>
+            <div id="messagesList"></div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="page-section" id="page-settings">
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h4>Site Info</h4>
+              <div class="form-group">
+                <label>Site Name</label>
+                <input type="text" id="settingSiteName" value="Dhan Prem Studio">
+              </div>
+              <div class="form-group">
+                <label>Tagline</label>
+                <input type="text" id="settingTagline" value="Digital Marketing & Content Creation Studio">
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="text" id="settingPhone" value="+91 98765 43210">
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" id="settingEmail" value="hello@dhanpremstudio.com">
+              </div>
+              <div class="form-group">
+                <label>Address</label>
+                <input type="text" id="settingAddress" value="Hazratganj, Lucknow, UP 226001">
+              </div>
+              <button class="topbar-btn" onclick="saveSettings()">Save Settings</button>
+            </div>
+            <div class="settings-card">
+              <h4>Social Links</h4>
+              <div class="form-group">
+                <label>Facebook URL</label>
+                <input type="text" id="settingFacebook" placeholder="https://facebook.com/...">
+              </div>
+              <div class="form-group">
+                <label>Instagram URL</label>
+                <input type="text" id="settingInstagram" placeholder="https://instagram.com/...">
+              </div>
+              <div class="form-group">
+                <label>YouTube URL</label>
+                <input type="text" id="settingYoutube" placeholder="https://youtube.com/...">
+              </div>
+              <div class="form-group">
+                <label>LinkedIn URL</label>
+                <input type="text" id="settingLinkedin" placeholder="https://linkedin.com/...">
+              </div>
+              <div class="form-group">
+                <label>WhatsApp Number (with country code)</label>
+                <input type="text" id="settingWhatsapp" placeholder="919876543210">
+              </div>
+              <button class="topbar-btn" onclick="saveSettings()">Save Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ MODAL ============ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add Item</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

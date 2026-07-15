@@ -233,6 +233,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Save to admin panel messages
+      const adminData = JSON.parse(localStorage.getItem('dpAdminData') || '{}');
+      if (!adminData.messages) adminData.messages = [];
+      adminData.messages.push({
+        id: Date.now(),
+        name: name,
+        email: email,
+        phone: phone || '',
+        service: service || '',
+        message: message,
+        date: new Date().toLocaleDateString('en-IN'),
+        read: false
+      });
+      localStorage.setItem('dpAdminData', JSON.stringify(adminData));
+
       // Success animation
       const btn = contactForm.querySelector('.btn');
       btn.innerHTML = '<span>Sending...</span>';
