@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadLogo() {
   const logo = localStorage.getItem('dpAdminLogo');
   if (!logo) return;
-  document.querySelectorAll('.logo-img').forEach(img => {
+  document.querySelectorAll('.logo-img, .logo-img-small').forEach(img => {
     img.src = logo;
   });
 }

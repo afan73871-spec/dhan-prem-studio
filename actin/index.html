@@ -322,7 +322,7 @@
     (function() {
       var logo = localStorage.getItem('dpAdminLogo');
       if (logo) {
-        document.querySelectorAll('.logo-img').forEach(function(img) { img.src = logo; });
+        document.querySelectorAll('.logo-img, .logo-img-small').forEach(function(img) { img.src = logo; });
       }
     })();
 
