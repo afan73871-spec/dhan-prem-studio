@@ -355,8 +355,10 @@ document.getElementById('modalOverlay').addEventListener('click', function(e) { 
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
 // ---- Auto-sync to static HTML after every change ----
+const adminChannel = new BroadcastChannel('site-updates');
 async function autoSync() {
   try { await apiFetch('/sync-static', { method: 'POST' }); } catch (e) {}
+  adminChannel.postMessage({ type: 'content-updated', time: Date.now() });
 }
 
 // ---- Sync to Static HTML (GitHub Pages) ----

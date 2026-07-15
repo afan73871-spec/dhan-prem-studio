@@ -209,11 +209,26 @@ document.addEventListener('DOMContentLoaded', () => {
   loadLogo();
 });
 
-// ---- Auto-refresh on tab focus (sync with admin panel changes) ----
-window.addEventListener('focus', () => {
+// ---- Real-time sync with admin panel ----
+function refreshAll() {
   loadServices();
+  loadServicesDetail();
   loadPortfolio();
   loadTestimonials();
   loadPricing();
   loadTeam();
-});
+  loadSettings();
+  loadLogo();
+}
+
+// BroadcastChannel - instant update when admin saves (cross-tab)
+try {
+  const channel = new BroadcastChannel('site-updates');
+  channel.onmessage = () => { refreshAll(); };
+} catch (e) {}
+
+// Tab focus fallback
+window.addEventListener('focus', refreshAll);
+
+// Polling fallback - check every 10 seconds
+setInterval(refreshAll, 10000);
