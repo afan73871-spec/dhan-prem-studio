@@ -327,7 +327,7 @@
     })();
 
     // Form handling
-    const API = 'http://localhost:3001/api';
+    const API = window.location.origin + '/api';
     function showNotification(msg) {
       const n = document.getElementById('notification');
       n.textContent = msg;

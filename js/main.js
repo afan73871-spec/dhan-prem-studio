@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.style.pointerEvents = 'none';
 
       try {
-        await fetch('http://localhost:3001/api/messages', {
+        await fetch(window.location.origin + '/api/messages', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, phone, service, message })

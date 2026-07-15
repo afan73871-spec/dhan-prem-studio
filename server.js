@@ -313,7 +313,7 @@ app.get('/api/stats', async (req, res) => {
 });
 
 // Fallback to index.html
-app.get('*', (req, res) => {
+app.get('/{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
