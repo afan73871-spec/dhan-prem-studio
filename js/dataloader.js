@@ -152,8 +152,17 @@ function loadTeam() {
 
 function loadSettings() {
   const data = getAdminData();
-  if (!data?.settings) return;
-  const s = data.settings;
+  const defaults = {
+    phone: '7985757365',
+    email: 'dhanpremstudios@zohomail.in',
+    address: 'Lucknow Aliganj UP',
+    whatsapp: '917985757365',
+    facebook: 'https://www.facebook.com/share/1BZaRRR38f/',
+    instagram: 'https://www.instagram.com/dhanpremstudios?igsh=dWdxOGM2amI4YTkx',
+    youtube: '',
+    linkedin: 'https://www.linkedin.com/company/dhanprem-studios/'
+  };
+  const s = data?.settings || defaults;
 
   const phoneEl = document.getElementById('sitePhone');
   const emailEl = document.getElementById('siteEmail');
