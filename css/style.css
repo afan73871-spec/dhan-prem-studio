@@ -204,6 +204,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow: visible;
 }
 
 .logo {
@@ -212,6 +213,8 @@ img {
   gap: 10px;
   font-size: 1.5rem;
   font-weight: 800;
+  flex-shrink: 0;
+  max-width: 200px;
 }
 
 .logo-icon {
@@ -229,10 +232,11 @@ img {
 }
 
 .logo-img {
-  height: 70px;
+  height: 55px;
   width: auto;
   object-fit: contain;
   animation: logoFloat 3s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 .logo .logo-text {
@@ -263,6 +267,8 @@ img {
   display: flex;
   align-items: center;
   gap: 24px;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav-links a {
