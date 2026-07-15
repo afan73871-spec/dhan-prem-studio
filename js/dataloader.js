@@ -281,4 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPricing();
   loadTeam();
   loadSettings();
+  loadLogo();
 });
+
+function loadLogo() {
+  const logo = localStorage.getItem('dpAdminLogo');
+  if (!logo) return;
+  document.querySelectorAll('.logo-img').forEach(img => {
+    img.src = logo;
+  });
+}

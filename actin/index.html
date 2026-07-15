@@ -318,6 +318,14 @@
 
   <script src="../js/main.js"></script>
   <script>
+    // Load admin logo
+    (function() {
+      var logo = localStorage.getItem('dpAdminLogo');
+      if (logo) {
+        document.querySelectorAll('.logo-img').forEach(function(img) { img.src = logo; });
+      }
+    })();
+
     // Form handling
     function showNotification(msg) {
       const n = document.getElementById('notification');

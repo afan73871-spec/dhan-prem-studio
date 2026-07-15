@@ -237,6 +237,24 @@
         <div class="page-section" id="page-settings">
           <div class="settings-grid">
             <div class="settings-card">
+              <h4>Logo Upload</h4>
+              <div class="form-group">
+                <label>Current Logo</label>
+                <div id="logoPreview" style="margin:10px 0;padding:20px;background:#18181B;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+                  <img id="logoPreviewImg" src="" alt="Current Logo" style="max-height:80px;display:none;">
+                  <p id="logoNoPreview" style="color:var(--text-dim);">No custom logo uploaded</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Upload New Logo (PNG/JPG/SVG)</label>
+                <input type="file" id="logoUpload" accept="image/*" style="padding:10px;">
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="topbar-btn" onclick="saveLogo()">Save Logo</button>
+                <button class="topbar-btn" style="background:#ef4444;" onclick="removeLogo()">Remove Logo</button>
+              </div>
+            </div>
+            <div class="settings-card">
               <h4>Site Info</h4>
               <div class="form-group">
                 <label>Site Name</label>

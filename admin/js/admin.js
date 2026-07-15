@@ -179,7 +179,7 @@ function loadPage(page) {
     case 'team': renderTeam(data.team); break;
     case 'messages': renderMessages(data.messages); break;
     case 'actin-messages': loadActinMessages(); break;
-    case 'settings': loadSettings(data.settings); break;
+    case 'settings': loadSettings(data.settings); loadLogoPreview(); break;
   }
 }
 
@@ -572,6 +572,61 @@ function saveSettings() {
   };
   saveData(data);
   alert('Settings saved successfully!');
+}
+
+// ---- Logo Upload ----
+let logoDataUrl = null;
+
+function loadLogoPreview() {
+  const stored = localStorage.getItem('dpAdminLogo');
+  const img = document.getElementById('logoPreviewImg');
+  const noPreview = document.getElementById('logoNoPreview');
+  if (stored) {
+    img.src = stored;
+    img.style.display = 'block';
+    noPreview.style.display = 'none';
+    logoDataUrl = stored;
+  } else {
+    img.style.display = 'none';
+    noPreview.style.display = 'block';
+    logoDataUrl = null;
+  }
+}
+
+document.getElementById('logoUpload').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    alert('Logo file too large. Max 2MB.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    logoDataUrl = ev.target.result;
+    document.getElementById('logoPreviewImg').src = logoDataUrl;
+    document.getElementById('logoPreviewImg').style.display = 'block';
+    document.getElementById('logoNoPreview').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+});
+
+function saveLogo() {
+  if (!logoDataUrl) {
+    alert('Please select a logo first.');
+    return;
+  }
+  localStorage.setItem('dpAdminLogo', logoDataUrl);
+  alert('Logo saved! Refresh the site to see changes.');
+}
+
+function removeLogo() {
+  if (!confirm('Remove custom logo?')) return;
+  localStorage.removeItem('dpAdminLogo');
+  logoDataUrl = null;
+  document.getElementById('logoPreviewImg').style.display = 'none';
+  document.getElementById('logoNoPreview').style.display = 'block';
+  document.getElementById('logoUpload').value = '';
+  alert('Logo removed. Site will use default logo.');
 }
 
 // ---- Close modal on overlay click ----
