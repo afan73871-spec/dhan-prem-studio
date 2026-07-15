@@ -302,6 +302,12 @@
               </div>
               <button class="topbar-btn" onclick="saveSettings()">Save Settings</button>
             </div>
+            <div class="settings-card">
+              <h4>Sync to GitHub</h4>
+              <p style="color:#999;margin-bottom:15px;font-size:0.9rem">Updates the main site HTML with latest data from database. Then push to GitHub.</p>
+              <button class="topbar-btn" onclick="syncToStatic()" style="background:#10B981">Sync &amp; Update Main Site</button>
+              <p id="syncResult" style="margin-top:10px;font-size:0.85rem"></p>
+            </div>
           </div>
         </div>
       </div>

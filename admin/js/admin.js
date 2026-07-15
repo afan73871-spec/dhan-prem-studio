@@ -351,3 +351,23 @@ async function removeLogo() {
 // ---- Close modal ----
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+// ---- Sync to Static HTML (GitHub Pages) ----
+async function syncToStatic() {
+  const result = document.getElementById('syncResult');
+  result.innerHTML = 'Syncing...';
+  result.style.color = '#FACC15';
+  try {
+    const data = await apiFetch('/sync-static', { method: 'POST' });
+    if (data.success) {
+      result.innerHTML = '&#10003; Done! Now run: <br><code style="background:#333;padding:3px 8px;border-radius:4px;display:inline-block;margin-top:5px">git add . && git commit -m "update" && git push</code>';
+      result.style.color = '#10B981';
+    } else {
+      result.innerHTML = 'Error: ' + (data.error || 'Unknown error');
+      result.style.color = '#EF4444';
+    }
+  } catch (e) {
+    result.innerHTML = 'Error: ' + e.message;
+    result.style.color = '#EF4444';
+  }
+}

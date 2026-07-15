@@ -3,6 +3,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -309,6 +310,65 @@ app.get('/api/stats', async (req, res) => {
     const [[j]] = await pool.query('SELECT COUNT(*) as count FROM actin_joins');
     const [[b]] = await pool.query('SELECT COUNT(*) as count FROM actin_brands');
     res.json({ services: s.count, portfolio: p.count, testimonials: t.count, messages: m.count, joins: j.count, brands: b.count });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// ---- SYNC TO STATIC HTML (for GitHub Pages) ----
+app.post('/api/sync-static', async (req, res) => {
+  try {
+    const [services] = await pool.query('SELECT * FROM services ORDER BY id');
+    const [portfolio] = await pool.query('SELECT * FROM portfolio ORDER BY id');
+    const [testimonials] = await pool.query('SELECT * FROM testimonials ORDER BY id');
+    const [pricing] = await pool.query('SELECT * FROM pricing ORDER BY id');
+
+    let html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+
+    // -- Services --
+    const servicesHtml = services.map(s => {
+      const icon = s.icon || '&#128188;';
+      return `        <div class="service-card"><div class="service-icon">${icon}</div><h3>${s.title}</h3><p>${s.description || ''}</p><a href="services/index.html" class="service-link">Learn More &#10132;</a></div>`;
+    }).join('\n');
+    html = html.replace(
+      /(<div class="services-grid[^"]*" id="servicesGrid">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>\s*<!-- =+ PORTFOLIO)/,
+      `$1\n${servicesHtml}\n      $3`
+    );
+
+    // -- Portfolio --
+    const portfolioHtml = portfolio.map(p => {
+      const bg = p.background || 'bg-1';
+      const icon = p.icon || '&#128640;';
+      return `        <div class="portfolio-card" data-category="${p.category}"><div class="portfolio-image"><div class="portfolio-image-bg ${bg}">${icon}</div><div class="portfolio-overlay"><h4>${p.title}</h4><p>${p.result || ''}</p></div></div><div class="portfolio-info"><span class="portfolio-tag">${p.category}</span><h4>${p.title}</h4></div></div>`;
+    }).join('\n');
+    html = html.replace(
+      /(<div class="portfolio-grid[^"]*" id="portfolioGrid">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>\s*<!-- =+ TESTIMONIALS)/,
+      `$1\n${portfolioHtml}\n      $3`
+    );
+
+    // -- Testimonials --
+    const testiHtml = testimonials.map(t => {
+      const stars = '&#9733;'.repeat(t.rating || 5);
+      return `          <div class="testimonial-card"><div class="testimonial-stars">${stars}</div><p class="testimonial-text">"${t.text}"</p><div class="testimonial-author"><div class="testimonial-avatar">${t.initials}</div><div class="testimonial-info"><strong>${t.name}</strong><span>${t.role || ''}</span></div></div></div>`;
+    }).join('\n');
+    const dotsHtml = testimonials.map((_, i) => `          <button class="testimonial-dot ${i === 0 ? 'active' : ''}"></button>`).join('\n');
+    html = html.replace(
+      /(<div class="testimonials-track[^"]*" id="testimonialsTrack">)([\s\S]*?)(<\/div>\s*<div class="testimonial-nav[^"]*" id="testimonialNav">)([\s\S]*?)(<\/div>)/,
+      `$1\n${testiHtml}\n        $3\n${dotsHtml}\n        $5`
+    );
+
+    // -- Pricing --
+    const pricingHtml = pricing.map(p => {
+      const features = (p.features || '').split(',').map(f => f.trim()).filter(Boolean);
+      const featList = features.map(f => `<li><span class="check">&#10003;</span> ${f}</li>`).join('');
+      const featured = p.featured ? ' featured' : '';
+      return `        <div class="pricing-card${featured}"><h3>${p.name}</h3><div class="pricing-price">&#8377;${p.price}<span>/month</span></div><p class="pricing-desc">${p.description || ''}</p><ul class="pricing-features">${featList}</ul><a href="contact/index.html" class="btn btn-primary">Get Started</a></div>`;
+    }).join('\n');
+    html = html.replace(
+      /(<div class="pricing-grid[^"]*" id="pricingGrid">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>\s*<!-- =+ CTA)/,
+      `$1\n${pricingHtml}\n      $3`
+    );
+
+    fs.writeFileSync(path.join(__dirname, 'index.html'), html, 'utf8');
+    res.json({ success: true, message: 'Static HTML updated! Push to GitHub with: git add . && git commit -m "update" && git push' });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
