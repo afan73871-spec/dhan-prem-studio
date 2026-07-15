@@ -11,6 +11,13 @@ async function apiGet(url) {
   } catch (e) { console.error('API error:', e); return []; }
 }
 
+function refreshAnimations(container) {
+  if (!container) return;
+  container.classList.remove('visible');
+  void container.offsetWidth;
+  container.classList.add('visible');
+}
+
 // ---- Services ----
 async function loadServices() {
   const services = await apiGet('/services');
@@ -24,6 +31,8 @@ async function loadServices() {
       <a href="services/index.html" class="service-link">Learn More &#10132;</a>
     </div>
   `).join('');
+  refreshAnimations(container);
+  if (window.setupCardTilt) window.setupCardTilt();
 }
 
 // ---- Services Detail ----
@@ -60,6 +69,7 @@ async function loadPortfolio() {
       <div class="portfolio-info"><span class="portfolio-tag">${p.category}</span><h4>${p.title}</h4></div>
     </div>
   `).join('');
+  refreshAnimations(container);
   initPortfolioFilter();
 }
 
@@ -102,6 +112,7 @@ async function loadPricing() {
       </div>
     `;
   }).join('');
+  refreshAnimations(container);
 }
 
 // ---- Team ----
@@ -112,6 +123,7 @@ async function loadTeam() {
   container.innerHTML = team.map(t => `
     <div class="team-card"><div class="team-avatar">${t.initials}</div><h4>${t.name}</h4><span>${t.role || ''}</span></div>
   `).join('');
+  refreshAnimations(container);
 }
 
 // ---- Settings ----
